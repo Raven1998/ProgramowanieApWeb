@@ -1,11 +1,10 @@
 class StatsApp{
-    //Inputy liczbowe
-    input1 :HTMLInputElement;
-    input2 :HTMLInputElement;
-    input3 :HTMLInputElement;
-    input4 :HTMLInputElement;
+    
+    dataInput1 :HTMLInputElement;
+    dataInput2 :HTMLInputElement;
+    dataInput3 :HTMLInputElement;
+    dataInput4 :HTMLInputElement;
 
-    //Inputy wynikow
     sumInput:HTMLInputElement;
     avgInput:HTMLInputElement;
     minInput:HTMLInputElement;
@@ -13,7 +12,7 @@ class StatsApp{
 
     //Konstruktor
     constructor(){
-        this.startApp;
+        this.startApp();
     }
 
     startApp(){
@@ -24,10 +23,10 @@ class StatsApp{
     //Query selectory do inputów
     getInputs(){
 
-        this.input1 =document.querySelector('#numberone');
-        this.input2 =document.querySelector('#numbertwo');
-        this.input3 =document.querySelector('#numberthree');
-        this.input4 =document.querySelector('#numberfour');
+        this.dataInput1 =document.querySelector('#data1');
+        this.dataInput2 =document.querySelector('#data2');
+        this.dataInput3 =document.querySelector('#data3');
+        this.dataInput4 =document.querySelector('#data4');
         this.sumInput =document.querySelector('#sum');
         this.avgInput =document.querySelector('#avg');
         this.minInput =document.querySelector('#min');
@@ -35,17 +34,17 @@ class StatsApp{
     }
 
     watchInputValues() {
-        this.input1.addEventListener('input', () => this.computeData());
-        this.input2.addEventListener('input', () => this.computeData());
-        this.input3.addEventListener('input', () => this.computeData());
-        this.input4.addEventListener('input', () => this.computeData());
+        this.dataInput1.addEventListener('input', () => this.computeData());
+        this.dataInput2.addEventListener('input', () => this.computeData());
+        this.dataInput3.addEventListener('input', () => this.computeData());
+        this.dataInput4.addEventListener('input', () => this.computeData());
     }
 
     computeData(){
-        const data1 = +this.input1.value;
-        const data2 = +this.input2.value;
-        const data3 = +this.input3.value;
-        const data4 = +this.input4.value;
+        const data1 = +this.dataInput1.value;
+        const data2 = +this.dataInput2.value;
+        const data3 = +this.dataInput3.value;
+        const data4 = +this.dataInput4.value;
 
         const sum=data1+data2+data3+data4;
         const avg = sum/4;
@@ -64,4 +63,4 @@ class StatsApp{
     }
 }
 
-const statsApp =new StatsApp();
+const App =new StatsApp();
