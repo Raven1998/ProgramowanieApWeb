@@ -2,15 +2,9 @@ class StatsApp{
     
     
     Inputsnumber: HTMLInputElement; //Odpowiedzialny za ilosc generwowanych inputow
-    dataDiv;
-    Inputs ;
-   // dataInput1 :HTMLInputElement;
-    //dataInput2 :HTMLInputElement;
-    //dataInput3 :HTMLInputElement;
-   // dataInput4 :HTMLInputElement;
-    
-    
-
+    dataDiv:any;
+    Inputs :any;
+   //Inputy wynikow
     sumInput:HTMLInputElement;
     avgInput:HTMLInputElement;
     minInput:HTMLInputElement;
@@ -23,6 +17,7 @@ class StatsApp{
 
     startApp(){
         this.getInputs();
+        this.createInputs();
         this.watchInputValues();
     }
 
@@ -31,10 +26,6 @@ class StatsApp{
     getInputs(){
         this.Inputsnumber =document.querySelector('#inputs');
         this.Inputs=document.querySelector('.input-data');
-        //this.dataInput1 =document.querySelector('#data1');
-        //this.dataInput2 =document.querySelector('#data2');
-        //this.dataInput3 =document.querySelector('#data3');
-        //this.dataInput4 =document.querySelector('#data4');
         this.sumInput =document.querySelector('#sum');
         this.avgInput =document.querySelector('#avg');
         this.minInput =document.querySelector('#min');
@@ -44,16 +35,16 @@ class StatsApp{
     //Tworzenie inputow
     createInputs(){
         const quantity= +this.Inputsnumber.value;
-        console.log(quantity);
 
         this.clearContent(); //Jezeli cos instnialo wczesniej - usuwa to.
 
         for(let i=1;i<=quantity;i++)
         {
             var input = document.createElement("input");
-            input.type = "text";
+            input.type = "number";
             input.className = "data"+i;
-            input.oninput =function(){}
+            input.value="0";
+            
 
             var button =document.createElement("button");
             button.innerHTML = 'Delete';
@@ -68,6 +59,7 @@ class StatsApp{
                 inputDiv.removeChild(classname);
                 inputDiv.removeChild(dataname);
                 inputDiv.removeChild(brname);
+
                 
             }
 
@@ -80,7 +72,7 @@ class StatsApp{
             
             
         }
-
+        this.watchInputValues();
     }
 
     clearContent(){
@@ -95,34 +87,52 @@ class StatsApp{
 
     watchInputValues() {
         this.Inputsnumber.addEventListener('input', ()=>this.createInputs());
-        //this.dataInput1.addEventListener('input', () => this.computeData());
-        //this.dataInput2.addEventListener('input', () => this.computeData());
-        //this.dataInput3.addEventListener('input', () => this.computeData());
-        //this.dataInput4.addEventListener('input', () => this.computeData());
 
+        this.Inputs.addEventListener('click', ()=>this.computeData());// Klikniecie delete 
         
-        this.Inputs.addEventListener('keypress', ()=>this.computeData());
-        this.Inputs.addEventListener('click', ()=>this.computeData());
-        
-        //TO DO
-        //OGARNIJ ODSWIEZANIE
+        //Dodanie w petli event listenerow 
+        let itemsnumber =document.querySelector('.input-data').childElementCount;
+        for(let i=0;i<itemsnumber;i++)
+        {
+            this.Inputs.children[i].addEventListener('input', ()=>this.computeData());
+        }
         
         
     }
 
     computeData(){
-        //const data1 = +this.dataInput1.value;
-       // const data2 = +this.dataInput2.value;
-        //const data3 = +this.dataInput3.value;
-        //const data4 = +this.dataInput4.value;
+       let itemsnumber =document.querySelector('.input-data').childElementCount; //Liczba elementow uwzgledniajaca takze bry i delete buttony
 
-        //const sum=data1+data2+data3+data4;
-        //const avg = sum/4;
+       let itemstable =[];
 
-        //const min =Math.min(data1,data2,data3,data4);
-        //const max =Math.max(data1,data2,data3,data4);
-        //this.showStats(sum, avg, min, max);
-        console.log('dziala');
+       for(let i=0;i<itemsnumber;i++)
+       {
+           itemstable[i]=this.Inputs.children[i].value;
+       }
+
+       let sum =0;
+       let min=0;
+       let max=0;
+       
+
+       for(let i=0;i<itemstable.length;)
+       {
+           let numberelement=parseInt(itemstable[i])
+           if(i==0)
+           {
+           min =numberelement;
+           max=numberelement;
+           }
+           if(min>numberelement){min =numberelement}
+           if(max<numberelement){max =numberelement}
+           sum =sum+numberelement;
+
+           i=i+3;
+       }
+
+       let avg=sum/(itemstable.length/3);
+       
+        this.showStats(sum, avg, min, max);
 
     }
 
