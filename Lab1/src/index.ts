@@ -23,7 +23,7 @@ class StatsApp{
 
     
     //Query selectory do inputów
-    getInputs(){
+    getInputs():void{
         this.Inputsnumber =document.querySelector('#inputs');
         this.Inputs=document.querySelector('.input-data');
         this.sumInput =document.querySelector('#sum');
@@ -75,7 +75,7 @@ class StatsApp{
         this.watchInputValues();
     }
 
-    clearContent(){
+    clearContent():void{
         this.dataDiv = document.querySelector('.input-data');
 
         while (this.dataDiv.firstChild) {
@@ -85,7 +85,7 @@ class StatsApp{
 
     
 
-    watchInputValues() {
+    watchInputValues():void {
         this.Inputsnumber.addEventListener('input', ()=>this.createInputs());
 
         this.Inputs.addEventListener('click', ()=>this.computeData());// Klikniecie delete 
@@ -100,7 +100,7 @@ class StatsApp{
         
     }
 
-    computeData(){
+    computeData():void{
        let itemsnumber =document.querySelector('.input-data').childElementCount; //Liczba elementow uwzgledniajaca takze bry i delete buttony
 
        let itemstable =[];
