@@ -15,10 +15,12 @@ const channel2:any[] =[];
 const channel3:any[] =[];
 const channel4:any[] =[];
 
-let isChannel1Record:boolean;
-let isChannel2Record:boolean;
-let isChannel3Record:boolean;
-let isChannel4Record:boolean;
+//Booleany odpowiedzialne za zezwolenie na nagrywanie kanalu
+let isChannel1Record:boolean =false;
+let isChannel2Record:boolean =false;
+let isChannel3Record:boolean =false;
+let isChannel4Record:boolean =false;
+
 //Wywolanie apki
 appStart();
 
@@ -36,10 +38,12 @@ function setChannels():void{
     document.querySelector('#chnl3').addEventListener('click', onPlayChannel3)
     document.querySelector('#chnl4').addEventListener('click', onPlayChannel4)
 
-    document.querySelector('#rchnl1').addEventListener('click', onPlayChannel1)
-    document.querySelector('#rchnl2').addEventListener('click', onPlayChannel2)
-    document.querySelector('#rchnl3').addEventListener('click', onPlayChannel3)
-    document.querySelector('#rchnl4').addEventListener('click', onPlayChannel4)
+    document.querySelector('#rchnl1').addEventListener('click', onRecordChannel1)
+    document.querySelector('#rchnl2').addEventListener('click', onRecordChannel2)
+    document.querySelector('#rchnl3').addEventListener('click', onRecordChannel3)
+    document.querySelector('#rchnl4').addEventListener('click', onRecordChannel4)
+
+    document.querySelector('#stopr').addEventListener('click', onStopRecord)
 }
 
 //Polaczenie dzwieku z HTML ze zmienna
@@ -85,15 +89,50 @@ function onPlayChannel4() :void{
     });
 }
 
+//Zezwól na nagranie kanału 1
+function onRecordChannel1():void{
+    isChannel1Record =true;
+}
 
+//Zezwól na nagranie kanału 2
+function onRecordChannel2():void{
+    isChannel2Record =true;
+}
+
+//Zezwól na nagranie kanału 3
+function onRecordChannel3():void{
+    isChannel3Record =true;
+}
+
+//Zezwól na nagranie kanału 4
+function onRecordChannel4():void{
+    isChannel4Record =true;
+}
+
+//Zatrzymaj nagrywanie
+function onStopRecord():void{
+isChannel1Record =false;
+isChannel2Record=false;
+isChannel3Record =false;
+isChannel4Record =false;
+}
+
+//Nagraj wybrany kanał
+function RecordChannel(ev: KeyboardEvent):void {
+    const key=ev.key;
+    const time =ev.timeStamp;
+
+if(isChannel1Record==true) {channel1.push({key,time})}//{key: key time:time}
+else if(isChannel2Record==true) {channel2.push({key,time})}
+else if(isChannel3Record==true) {channel3.push({key,time})}
+else if(isChannel4Record==true) {channel4.push({key,time})}
+}
 
 //Funkcja reagujaca na wcisniecie klawiatury
 function onKeyDown(ev: KeyboardEvent):void {
-
-console.log(ev);
 const key=ev.key;
-const time =ev.timeStamp;
-channel1.push({key,time})//{key: key time:time}
+console.log(ev);
+RecordChannel(ev);
 playSound(key);
 }
 

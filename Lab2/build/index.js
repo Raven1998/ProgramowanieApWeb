@@ -13,6 +13,11 @@ var channel1 = [];
 var channel2 = [];
 var channel3 = [];
 var channel4 = [];
+//Booleany 
+var isChannel1Record = false;
+var isChannel2Record = false;
+var isChannel3Record = false;
+var isChannel4Record = false;
 //Wywolanie apki
 appStart();
 //Konstruktor
@@ -27,10 +32,11 @@ function setChannels() {
     document.querySelector('#chnl2').addEventListener('click', onPlayChannel2);
     document.querySelector('#chnl3').addEventListener('click', onPlayChannel3);
     document.querySelector('#chnl4').addEventListener('click', onPlayChannel4);
-    document.querySelector('#rchnl1').addEventListener('click', onPlayChannel1);
-    document.querySelector('#rchnl2').addEventListener('click', onPlayChannel2);
-    document.querySelector('#rchnl3').addEventListener('click', onPlayChannel3);
-    document.querySelector('#rchnl4').addEventListener('click', onPlayChannel4);
+    document.querySelector('#rchnl1').addEventListener('click', onRecordChannel1);
+    document.querySelector('#rchnl2').addEventListener('click', onRecordChannel2);
+    document.querySelector('#rchnl3').addEventListener('click', onRecordChannel3);
+    document.querySelector('#rchnl4').addEventListener('click', onRecordChannel4);
+    document.querySelector('#stopr').addEventListener('click', onStopRecord);
 }
 //Polaczenie dzwieku z HTML ze zmienna
 function getSounds() {
@@ -68,12 +74,51 @@ function onPlayChannel4() {
         setTimeout(function () { return playSound(sound.key); }, sound.time);
     });
 }
-//Funkcja reagujaca na wcisniecie klawiatury
-function onKeyDown(ev) {
-    console.log(ev);
+//Zezwól na nagranie kanału 1
+function onRecordChannel1() {
+    isChannel1Record = true;
+}
+//Zezwól na nagranie kanału 2
+function onRecordChannel2() {
+    isChannel2Record = true;
+}
+//Zezwól na nagranie kanału 3
+function onRecordChannel3() {
+    isChannel3Record = true;
+}
+//Zezwól na nagranie kanału 4
+function onRecordChannel4() {
+    isChannel4Record = true;
+}
+//Zatrzymaj nagrywanie
+function onStopRecord() {
+    isChannel1Record = false;
+    isChannel2Record = false;
+    isChannel3Record = false;
+    isChannel4Record = false;
+}
+//Nagraj wybrany kanał
+function RecordChannel(ev) {
     var key = ev.key;
     var time = ev.timeStamp;
-    channel1.push({ key: key, time: time }); //{key: key time:time}
+    if (isChannel1Record == true) {
+        channel1.push({ key: key, time: time });
+    } //{key: key time:time}
+    else if (isChannel2Record == true) {
+        channel2.push({ key: key, time: time });
+    }
+    else if (isChannel3Record == true) {
+        channel3.push({ key: key, time: time });
+    }
+    else if (isChannel4Record == true) {
+        channel4.push({ key: key, time: time });
+    }
+}
+//Funkcja reagujaca na wcisniecie klawiatury
+function onKeyDown(ev) {
+    var key = ev.key;
+    console.log(ev);
+    RecordChannel(ev);
     playSound(key);
 }
 //Odtworzenie dzwieku po kliknieciu
