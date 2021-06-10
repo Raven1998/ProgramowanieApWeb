@@ -13,11 +13,12 @@ var channel1 = [];
 var channel2 = [];
 var channel3 = [];
 var channel4 = [];
-//Booleany 
+//Booleany odpowiedzialne za zezwolenie na nagrywanie kanalu
 var isChannel1Record = false;
 var isChannel2Record = false;
 var isChannel3Record = false;
 var isChannel4Record = false;
+var recordStartTime;
 //Wywolanie apki
 appStart();
 //Konstruktor
@@ -75,20 +76,41 @@ function onPlayChannel4() {
     });
 }
 //Zezwól na nagranie kanału 1
-function onRecordChannel1() {
+function onRecordChannel1(ev) {
+    channel1 = []; // Jezeli cos bylo wczesniej nagrane zostanie to wyczyszczone
     isChannel1Record = true;
+    isChannel2Record = false;
+    isChannel3Record = false;
+    isChannel4Record = false;
+    //Tylko jeden kanal moze byc nagrywany w danym czasie
+    recordStartTime = ev.timeStamp;
 }
 //Zezwól na nagranie kanału 2
-function onRecordChannel2() {
+function onRecordChannel2(ev) {
+    channel2 = [];
+    isChannel1Record = false;
     isChannel2Record = true;
+    isChannel3Record = false;
+    isChannel4Record = false;
+    recordStartTime = ev.timeStamp;
 }
 //Zezwól na nagranie kanału 3
-function onRecordChannel3() {
+function onRecordChannel3(ev) {
+    channel3 = [];
+    isChannel1Record = false;
+    isChannel2Record = false;
     isChannel3Record = true;
+    isChannel4Record = false;
+    recordStartTime = ev.timeStamp;
 }
 //Zezwól na nagranie kanału 4
-function onRecordChannel4() {
+function onRecordChannel4(ev) {
+    channel4 = [];
+    isChannel1Record = false;
+    isChannel2Record = false;
+    isChannel3Record = false;
     isChannel4Record = true;
+    recordStartTime = ev.timeStamp;
 }
 //Zatrzymaj nagrywanie
 function onStopRecord() {
@@ -100,7 +122,8 @@ function onStopRecord() {
 //Nagraj wybrany kanał
 function RecordChannel(ev) {
     var key = ev.key;
-    var time = ev.timeStamp;
+    var stampTime = ev.timeStamp;
+    var time = stampTime - recordStartTime;
     if (isChannel1Record == true) {
         channel1.push({ key: key, time: time });
     } //{key: key time:time}

@@ -10,16 +10,18 @@ let tinkSound: HTMLAudioElement;
 let tomSound: HTMLAudioElement;
 
 //Play Channels
-const channel1:any[] =[];
-const channel2:any[] =[];
-const channel3:any[] =[];
-const channel4:any[] =[];
+let channel1:any[] =[];
+let channel2:any[] =[];
+let channel3:any[] =[];
+let channel4:any[] =[];
 
 //Booleany odpowiedzialne za zezwolenie na nagrywanie kanalu
 let isChannel1Record:boolean =false;
 let isChannel2Record:boolean =false;
 let isChannel3Record:boolean =false;
 let isChannel4Record:boolean =false;
+
+let recordStartTime:any;
 
 //Wywolanie apki
 appStart();
@@ -90,23 +92,44 @@ function onPlayChannel4() :void{
 }
 
 //Zezwól na nagranie kanału 1
-function onRecordChannel1():void{
+function onRecordChannel1(ev :Event):void{
+    channel1 =[]; // Jezeli cos bylo wczesniej nagrane zostanie to wyczyszczone
     isChannel1Record =true;
+    isChannel2Record =false;
+    isChannel3Record =false;
+    isChannel4Record =false;
+    //Tylko jeden kanal moze byc nagrywany w danym czasie
+    recordStartTime=ev.timeStamp;
 }
 
 //Zezwól na nagranie kanału 2
-function onRecordChannel2():void{
+function onRecordChannel2(ev : Event):void{
+    channel2=[];
+    isChannel1Record =false;
     isChannel2Record =true;
+    isChannel3Record =false;
+    isChannel4Record =false;
+    recordStartTime=ev.timeStamp;
 }
 
 //Zezwól na nagranie kanału 3
-function onRecordChannel3():void{
+function onRecordChannel3(ev:Event):void{
+    channel3=[];
+    isChannel1Record =false;
+    isChannel2Record =false;
     isChannel3Record =true;
+    isChannel4Record =false;
+    recordStartTime=ev.timeStamp;
 }
 
 //Zezwól na nagranie kanału 4
-function onRecordChannel4():void{
+function onRecordChannel4(ev:Event):void{
+    channel4=[];
+    isChannel1Record =false;
+    isChannel2Record =false;
+    isChannel3Record =false;
     isChannel4Record =true;
+    recordStartTime=ev.timeStamp;
 }
 
 //Zatrzymaj nagrywanie
@@ -120,7 +143,8 @@ isChannel4Record =false;
 //Nagraj wybrany kanał
 function RecordChannel(ev: KeyboardEvent):void {
     const key=ev.key;
-    const time =ev.timeStamp;
+    const stampTime =ev.timeStamp;
+    const time=stampTime-recordStartTime;
 
 if(isChannel1Record==true) {channel1.push({key,time})}//{key: key time:time}
 else if(isChannel2Record==true) {channel2.push({key,time})}

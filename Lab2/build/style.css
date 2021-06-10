@@ -115,9 +115,9 @@ kbd {
 }
 
 .stop:hover{
-    color: white;
+    color: rgba(255, 249, 249, 0.487);
  
-    border: 0.2vw solid white;
+    border: 0.2vw solid rgba(255, 255, 255, 0.474);
 }
 .record-line{
     margin:0.5vh;
