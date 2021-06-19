@@ -1,0 +1,25 @@
+body {
+  background: lightblue;
+}
+
+.search-box{
+
+  padding-top: 2vh;
+  width: 100%;
+  height: 10vh;
+  text-align: center;
+  line-height: 2vh;
+  
+}
+
+#city{
+  height: 4vh;
+  width: 10vw;
+}
+
+.weatherBox{
+  width: 20vw;
+  height:20vh;
+  background-color: white;
+  border: 10px solid black;
+}
