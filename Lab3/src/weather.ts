@@ -4,12 +4,14 @@ export class Weather{
     temperature: number
     windSpeed:number
     pressure:number
+    weatherDescription:string;
 
-    constructor(city:string,temp:number,wind:number,press:number) {
+    constructor(city:string,temp:number,wind:number,press:number,weatherdesc:string) {
         this.cityName=city;
-        this.temperature=temp;
+        this.temperature=parseInt((temp-273.15).toPrecision(3));
         this.windSpeed=wind;
         this.pressure = press;
+        this.weatherDescription =weatherdesc;
        
     }
 

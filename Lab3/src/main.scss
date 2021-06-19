@@ -1,25 +1,82 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700&display=swap");
+
+$primary: #39cccc;
+
 body {
-  background: lightblue;
+  background: #f3f3f3;
+  font-family: "Nunito", "sans-serif";
+  color: white;
 }
 
-.search-box{
-
-  padding-top: 2vh;
+.search-box {
+  padding-top: 3vh;
   width: 100%;
   height: 10vh;
   text-align: center;
   line-height: 2vh;
-  
+  display: inline-block;
 }
 
-#city{
-  height: 4vh;
-  width: 10vw;
+#city {
+  height: 5vh;
+  width: 14vw;
+  border: 1px solid $primary;
+  font-family: 'Nunito', 'sans-serif';
+  font-weight: 600;
+  padding-left: 0.5vw;
+  color: $primary;
+  border-top-left-radius: 4px;
+
+  &:active {
+    border: 1px solid $primary;
+  }
 }
 
-.weatherBox{
+#add {
+  display: inline-block;
+  height: 5.5vh;
+  background: $primary;
+  border: 0px;
+  border-bottom-right-radius: 4px;
+  color: white;
+  font-family: "Nunito", "sans-serif";
+  font-weight: 600;
+
+  &:hover {
+    background: darken($primary, 5%);
+  }
+
+  &:active {
+    background: darken($primary, 10%);
+  }
+}
+
+.weatherBox {
   width: 20vw;
-  height:20vh;
-  background-color: white;
-  border: 10px solid black;
+  background-color: $primary;
+  text-align: center;
+  display: inline-block;
+  padding: 1vw;
+  margin: 1vw;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.15);
+  border-top-left-radius: 11px;
+  border-bottom-right-radius: 11px;
+
+  &:hover {
+    background: darken($primary, 4%);
+  }
+}
+
+.temperature {
+  font-size: 4em;
+  font-weight: 500;
+}
+
+.cityname {
+  font-size: 3em;
+  font-weight: 400;
+}
+
+.additional-city-info {
+  font-weight: 300;
 }

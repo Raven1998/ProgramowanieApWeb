@@ -17,7 +17,7 @@ export class App {
     performAction() {
         this.getCity();
         this.getCityInfo(this.cityName)
-        this.createBox(this.cityWeather);
+        
     }
 
 
@@ -31,11 +31,14 @@ export class App {
 
     async getCityInfo(city: string) {
         const weather = await this.getWeather(city);
+        console.log(weather);
         let name:string=weather.name;
         let temp:number=weather.main.temp;
         let wind :number =weather.wind.speed;
         let press:number =weather.main.pressure;
-        this.cityWeather = new Weather(name,temp,wind,press);
+        let weatherDesc:string =weather.weather[2];
+        this.cityWeather = new Weather(name,temp,wind,press,weatherDesc);
+        this.createBox(this.cityWeather);
     }
     async getWeather(city: string): Promise<any> {
         const openWeatherUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=${this.opwApiKey}`;
@@ -59,6 +62,13 @@ export class App {
         const div = document.querySelector('.weather-line');
         const element=document.createElement('div');
         element.className='weatherBox';
+        element.innerHTML+=`<span class="temperature">${this.cityWeather.temperature} °C</span><br>
+        <span class="cityname">${this.cityWeather.cityName}</span><br>
+        
+        <span class="additional-city-info">${this.cityWeather.pressure} Hpa</span><br>
+        <span class="additional-city-info">${this.cityWeather.windSpeed} Km/h</span>
+        `;
+        
 
         div.appendChild(element);
 
