@@ -11,6 +11,7 @@ export class App {
     constructor() {
         this.cityInput = document.querySelector('#city');
         document.querySelector('#add').addEventListener('click', () => this.performAction())
+        this.getData();
 
     }
 
@@ -52,7 +53,20 @@ export class App {
     getData() {
         const data = localStorage.getItem('weatherData');
         if (data) {
-            return JSON.parse(data);
+            
+            JSON.parse(data);
+           let datatable :string[]=[]
+          datatable=JSON.parse(data);
+          console.log(datatable);
+
+          for(let i=0;i<datatable.length;i++)
+          {
+              this.cities.push(datatable[i])
+              this.saveData(this.cities)
+              this.getCityInfo(datatable[i]);
+          }
+            
+            
         } else {
             return {};
         }
@@ -62,7 +76,7 @@ export class App {
         const div = document.querySelector('.weather-line');
         const element=document.createElement('div');
         element.className='weatherBox';
-        element.innerHTML+=`<span class="temperature">${this.cityWeather.temperature} °C</span><br>
+        element.innerHTML+=`<span class="temperature">${this.cityWeather.temperature}°C</span><br>
         <span class="cityname">${this.cityWeather.cityName}</span><br>
         
         <span class="additional-city-info">${this.cityWeather.pressure} Hpa</span><br>
