@@ -1,5 +1,4 @@
-import { colors } from './colors';
-
+import { colors} from "./colors"
 export class Note{
 
     title:string
@@ -17,6 +16,8 @@ export class Note{
         this.isPinned=false;
        
     }
+
+    
 
 
 }
