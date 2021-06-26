@@ -10,6 +10,8 @@ export class App {
    AllNotes:Notes =new Notes;
    Storage:appLocalStorage = new appLocalStorage();
 
+   CreateCount:number=0;
+
    constructor() {
         this.getInputs();
         document.querySelector('#add').addEventListener('click',() => this.performAction())
@@ -30,7 +32,7 @@ export class App {
     createNote(){
         this.singleNote= new Note(this.titleInput.value,this.contentInput.value);
         this.AllNotes.AddNote(this.singleNote);
-        console.log(this.AllNotes);
+        
         this.Storage.saveData(this.AllNotes.noteTable);
     }
 
@@ -38,8 +40,8 @@ export class App {
         let restoredNotes:string=this.Storage.getData();
     let datatable :Note[]=[]
        datatable=JSON.parse(restoredNotes);
-       console.log(datatable);
-
+       
+        
        for(let i=0;i<datatable.length;i++)
        {
            this.createSingleBox(datatable[i]);
@@ -54,24 +56,38 @@ export class App {
         const div = document.querySelector('.note-box');
         
         div.innerHTML+=`
-        <div class='note' bgcolor='${obj.color}'>
+        <div class='note noteid${obj.noteID}' 'bgcolor='${obj.color}'>
         <span class="creation-date">${obj.creationDate}</span><br>
         <span class="notetitle">${obj.title}</span><br>
         <span class="notecontent">${obj.content}</span><br>
         <button type="button" id='changeColor'>Change Color</button>
-        <button type="button" id='delete'>Make important</button>
-        <button type="button" id='delete'>Delete note</button>
+        <button type="button" id='important'>Make important</button>
+        <button type="button" class='delete deleteid${obj.noteID}''>Delete note</button>
         <div>
         `;
 
-   
-
-    }
-
-    changeColor(obj:Note){
+        //document.querySelector('.deleteid'+obj.noteID).addEventListener('click',() => this.deleteNote(obj.noteID))
 
         
     }
+
+
+
+    deleteNote(id:number){
+
+        let indexnumber:number =0;
+
+        this.AllNotes.noteTable.forEach((entry) =>{
+            if(entry.noteID==id){ this.AllNotes.DeleteNote(indexnumber);}
+            indexnumber++;
+        });
+
+        document.querySelector('.noteid'+id).remove();
+
+        this.Storage.saveData(this.AllNotes.noteTable);
+        
+    }
+    
 
     
 
