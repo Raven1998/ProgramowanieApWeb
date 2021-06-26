@@ -1,4 +1,6 @@
-export class appLocalStorage{
+import { appStorage } from "./appStorage";
+
+export class appLocalStorage implements appStorage{
 
     saveData(data: any) {
         localStorage.setItem('notesData', JSON.stringify(data));
