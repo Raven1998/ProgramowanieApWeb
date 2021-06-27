@@ -56,7 +56,7 @@ export class App {
         const div = document.querySelector('.note-box');
         
         div.innerHTML+=`
-        <div class='note noteid${obj.noteID}' 'bgcolor='${obj.color}'>
+        <div class='notebox noteid${obj.noteID}' 'bgcolor='${obj.color}'>
         <span class="creation-date">${obj.creationDate}</span><br>
         <span class="notetitle">${obj.title}</span><br>
         <span class="notecontent">${obj.content}</span><br>
@@ -66,7 +66,7 @@ export class App {
         <div>
         `;
 
-        //document.querySelector('.deleteid'+obj.noteID).addEventListener('click',() => this.deleteNote(obj.noteID))
+        document.querySelector('.deleteid'+obj.noteID).addEventListener('click',() => this.deleteNote(obj.noteID))
 
         
     }
